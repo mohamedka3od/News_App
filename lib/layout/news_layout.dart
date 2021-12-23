@@ -63,7 +63,7 @@ class NewsLayout extends StatelessWidget {
 
                 },
                 body:TabBarView(
-                  physics: const NeverScrollableScrollPhysics(),
+                  
                   children: cubit.screens,
 
                 ),

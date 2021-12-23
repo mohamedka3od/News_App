@@ -50,6 +50,10 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
+              tabBarTheme: const TabBarTheme(
+                labelColor: Colors.deepOrange,
+                unselectedLabelColor: Colors.grey,
+              ),
               textTheme: const TextTheme(
                 bodyText1: TextStyle(
                   fontSize: 18.0,
@@ -86,6 +90,10 @@ class MyApp extends StatelessWidget {
             ),
             themeMode: AppCubit.get(context).isDark ? ThemeMode.dark:ThemeMode.light,
             darkTheme: ThemeData(
+              tabBarTheme: const TabBarTheme(
+                labelColor: Colors.deepOrange,
+                unselectedLabelColor: Colors.grey,
+              ),
               primarySwatch: Colors.deepOrange,
               appBarTheme:  AppBarTheme(
                 titleSpacing: 20.0,

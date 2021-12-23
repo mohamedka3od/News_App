@@ -17,36 +17,66 @@ class NewsLayout extends StatelessWidget {
       listener: (context,state){},
       builder: (context, state){
         var cubit = NewsCubit.get(context);
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text(
-                'News App'
-            ),
-            actions: [
-              IconButton(
-                icon:const Icon(Icons.search),
-                onPressed: (){
-                  navigateTo(context , SearchScreen());
+
+        return DefaultTabController(
+          length: cubit.bottomItems.length,
+          child: Builder(builder: (context){
+            final TabController tabController = DefaultTabController.of(context)!;
+            tabController.addListener(() {
+              if (!tabController.indexIsChanging) {
+                cubit.changeBottomNavBar(tabController.index);
+              }
+            });
+            return Scaffold(
+              body: NestedScrollView(
+                physics: const NeverScrollableScrollPhysics(),
+                floatHeaderSlivers: true,
+                headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+                  return <Widget>[
+                    SliverAppBar(
+
+                      pinned: true, //to prevent TabBar from going off the screen
+                      floating: true, //to prevent TabBar from going off the screen
+                      title: const Text(
+                          'News App'
+                      ),
+                      elevation: 10.0,
+                      actions: [
+                        IconButton(
+                          icon:const Icon(Icons.search),
+                          onPressed: (){
+                            navigateTo(context , SearchScreen());
+                          },
+                        ),
+                        IconButton(
+                          icon:const Icon(Icons.brightness_4_outlined),
+                          onPressed: (){
+                            AppCubit.get(context).changeAppMode();
+                          },
+                        ),
+                      ],
+                      bottom:  TabBar(
+                        tabs: cubit.bottomItems,
+                      ),
+                    ),
+                  ];
+
                 },
+                body:TabBarView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: cubit.screens,
+
+                ),
+
               ),
-              IconButton(
-                icon:const Icon(Icons.brightness_4_outlined),
-                onPressed: (){
-                  AppCubit.get(context).changeAppMode();
-                },
-              ),
-            ],
-          ),
-          body: cubit.screens[cubit.currentIndex],
-          bottomNavigationBar: BottomNavigationBar(
-            items:cubit.bottomItems,
-            currentIndex: cubit.currentIndex,
-            onTap: (index){
-                cubit.changeBottomNavBar(index);
-            },
-            elevation: 20.0,
-          ),
+            );
+          },),
+
+
+
+
         );
+
       },
 
     );

@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/modules/business/business_screen.dart';
 import 'package:news_app/modules/science/science_screen.dart';
 import 'package:news_app/modules/sports/sports_screen.dart';
-import 'package:news_app/network/local/cache_helper.dart';
 import 'package:news_app/network/remote/dio_helper.dart';
 import 'package:news_app/shared/cubit/states.dart';
 
@@ -15,18 +14,18 @@ class NewsCubit extends Cubit<NewsStates>{
 
   int currentIndex = 0;
 
-  List<BottomNavigationBarItem> bottomItems = const[
-    BottomNavigationBarItem(
+  List<Widget> bottomItems = const[
+    Tab(
          icon: Icon(Icons.business),
-         label: 'Business'
+         text: 'Business'
     ),
-    BottomNavigationBarItem(
+    Tab(
         icon: Icon(Icons.sports),
-        label: 'Sports'
+        text: 'Sports'
     ),
-    BottomNavigationBarItem(
+    Tab(
         icon: Icon(Icons.science),
-        label: 'Science'
+        text: 'Science'
     ),
   ];
   List<Widget> screens =const [

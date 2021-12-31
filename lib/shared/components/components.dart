@@ -1,5 +1,4 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/modules/web_view/web_view_screen.dart';
 
@@ -8,16 +7,24 @@ Widget buildArticleItem(article,context)=>InkWell(
     padding: const EdgeInsets.all(20.0),
     child: Row(
       children: [
-        Container(
+        SizedBox(
           width: 120.0,
           height: 120.0,
-          decoration: BoxDecoration(
+          child: ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
-            image:  DecorationImage(
-                image: NetworkImage(
-                  '${article['urlToImage']??'https://media.istockphoto.com/vectors/male-hand-holding-megaphone-with-breaking-news-speech-bubble-banner-vector-id1197831888?k=20&m=1197831888&s=612x612&w=0&h=HFWpcI1kIwr_GwwRSqOHlpf9r-BAartlbFtshuCY4Zw='}'
-                ),
-                fit: BoxFit.cover
+            child: FadeInImage(
+              image :NetworkImage(
+                  '${article['urlToImage']}',
+              ) ,
+              placeholder: const AssetImage('assets/images/news1.png'),
+              fit: BoxFit.cover,
+              imageErrorBuilder: (context, object, stackTrack){
+                return Image.asset(
+                  'assets/images/news1.png',
+                  fit: BoxFit.cover,
+                );
+              },
+
             ),
           ),
         ),
@@ -70,7 +77,7 @@ Widget myDivider( ) => Padding(
 Widget articleBuilder (list ,context,{isSearch = false})=>ConditionalBuilder(
   condition:  list.isNotEmpty,
   builder: (context)=>ListView.separated(
-      physics: const BouncingScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context ,index)=>buildArticleItem(list[index],context),
       separatorBuilder: (context ,index)=>myDivider(),
       itemCount: 10,

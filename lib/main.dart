@@ -1,6 +1,7 @@
 
 import 'dart:ui';
 
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -128,11 +129,19 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
               ),
-
             ),
-            home: const Directionality(
+            home: Directionality(
                 textDirection: TextDirection.ltr,
-                child: NewsLayout()),
+                child: AnimatedSplashScreen(
+                  splash: 'assets/images/news1.png',
+                  splashIconSize: 300,
+                  backgroundColor:isDark? HexColor('333739'):Colors.white,
+                  duration: 1500,
+                  splashTransition: SplashTransition.slideTransition,
+
+                  nextScreen: const NewsLayout(),
+
+                )),
           );
         } ,
 

@@ -58,7 +58,7 @@ class NewsCubit extends Cubit<NewsStates>{
         'apiKey':'68c9789c60ee4116a0a96fd722a3065b',
       },
     ).then((value){
-    //  print(value.data['articles'][0]['title']);
+
       business =value.data['articles'];
        print(business[0]['title']);
       emit(NewsGetBusinessSuccessState());
@@ -118,8 +118,9 @@ class NewsCubit extends Cubit<NewsStates>{
     DioHelper.getData(
         url: 'v2/everything',
         query: {
-          'q':value,
+          'qInTitle':value,
           'apiKey':'68c9789c60ee4116a0a96fd722a3065b',
+          'sortBy':'relevancy',
         }
         ).then((value) {
           search = value.data['articles'];

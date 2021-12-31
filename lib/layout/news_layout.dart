@@ -23,17 +23,18 @@ class NewsLayout extends StatelessWidget {
           child: Builder(builder: (context){
             final TabController tabController = DefaultTabController.of(context)!;
             tabController.addListener(() {
-              if (tabController.index != cubit.currentIndex) {
+              if (!tabController.indexIsChanging) {
                 cubit.changeBottomNavBar(tabController.index);
               }
             });
             return Scaffold(
               body: NestedScrollView(
-                physics: const BouncingScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 floatHeaderSlivers: true,
                 headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
                   return <Widget>[
                     SliverAppBar(
+
                       pinned: true, //to prevent TabBar from going off the screen
                       floating: true, //to prevent TabBar from going off the screen
                       title: const Text(
@@ -59,10 +60,14 @@ class NewsLayout extends StatelessWidget {
                       ),
                     ),
                   ];
+
                 },
                 body:TabBarView(
+                  physics: const NeverScrollableScrollPhysics(),
                   children: cubit.screens,
+
                 ),
+
               ),
             );
           },),
